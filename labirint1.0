@@ -1,0 +1,34 @@
+from pygame import *
+
+w_width= 700
+w_height= 500
+mw = display.set_mode(w_width, w_height)
+display.set_caption('labirint')
+bg = transform.scale(image.load(BACKGROUND PHOTO), (w_width, w_height))
+
+class GameSprite(sprite.Sprite):
+    def __init__(self, player_image, player_x, player_y, player_speed):
+        super().__init()
+        self.image = transform.scale(image.load(player_image), (50,50))
+        self.speed = player_speed
+        self.rect = self.image.get_rect()
+        self.rect.x = player_x
+        self.rect.y = player_y
+    def reset(self):
+        mw.blit(self.image, (self.rect.x, self.rect.y))
+
+player = GameSprite('HERO IMAGE', 5, w_height-80, 5)
+monster = GameSprite('', w_width-80, 300, 2)
+final = GameSprite('', w_width-80, w_height-80, 0)
+
+game = True
+clock = time.Clock()
+while game:
+    for e in event.get():
+        if e.type == QUIT:
+            game = False
+    mw.blit(bg, (0,0))
+    player.reset()
+    monster.reset()
+    display.update()
+    clock.tick(144)
